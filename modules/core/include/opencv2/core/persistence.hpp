@@ -714,7 +714,8 @@ CV_EXPORTS void read(const FileNode& node, int& value, int default_value);
 CV_EXPORTS void read(const FileNode& node, float& value, float default_value);
 CV_EXPORTS void read(const FileNode& node, double& value, double default_value);
 CV_EXPORTS void read(const FileNode& node, String& value, const String& default_value);
-CV_EXPORTS void read(const FileNode& node, Mat& mat, const Mat& default_mat = Mat() );
+CV_EXPORTS void read(const FileNode& node, std::string& value, const std::string& default_value);
+CV_EXPORTS void read(const FileNode& node, Mat& mat, const Mat& default_mat = Mat());
 CV_EXPORTS void read(const FileNode& node, SparseMat& mat, const SparseMat& default_mat = SparseMat() );
 CV_EXPORTS void read(const FileNode& node, std::vector<KeyPoint>& keypoints);
 CV_EXPORTS void read(const FileNode& node, std::vector<DMatch>& matches);
@@ -1215,7 +1216,7 @@ FileStorage& operator << (FileStorage& fs, char* value)
 template<typename _Tp> static inline
 FileNodeIterator& operator >> (FileNodeIterator& it, _Tp& value)
 {
-    read( *it, value, _Tp());
+    read( *it, value, value);
     return ++it;
 }
 
@@ -1239,7 +1240,7 @@ FileNodeIterator& operator >> (FileNodeIterator& it, std::vector<_Tp>& vec)
 template<typename _Tp> static inline
 void operator >> (const FileNode& n, _Tp& value)
 {
-    read( n, value, _Tp());
+    read( n, value, value);
 }
 
 /** @brief Reads data from a file storage.
